@@ -154,6 +154,112 @@ VALUES
   ADD COLUMN LAST_NAME VARCHAR(100);" > src/main/resources/db/migrations/V2__Add_firstname_lastname_to_user_table.sql
 * sudo docker-compose down
 * sudo docker-compose up
+* mkdir src/main/java/com/example/springbootmonolith/models
+* touch src/main/java/com/example/springbootmonolith/models/User.java
+* echo "package com.example.springbootmonolith.models;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "USERS")
+public class User {
+
+    @Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "USER_NAME")
+    private String userName;
+
+    @Column(name = "FIRST_NAME")
+    private String firstName;
+
+    @Column(name = "LAST_NAME")
+    private String lastName;
+
+    public User() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+}" >> src/main/java/com/example/springbootmonolith/models/User.java
+* mkdir src/main/java/com/example/springbootmonolith/repositories
+* touch src/main/java/com/example/springbootmonolith/repositories/UserRepository.java
+* "package com.example.springbootmonolith.repositories;
+
+import com.example.springbootmonolith.models.User;
+import org.springframework.data.repository.CrudRepository;
+
+public interface UserRepository extends CrudRepository<User, Long> {
+
+}" >> src/main/java/com/example/springbootmonolith/repositories/UserRepository.java
+
+* add to build.gradle as dependency: compileOnly 'org.projectlombok:lombok'
+* echo "package com.example.springbootmonolith.models;
+
+import lombok.*;
+import javax.persistence.*;
+
+@Data
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter
+@Entity @Table(name = "USERS")
+public class User {
+
+    @Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "USER_NAME")
+    private String userName;
+
+    @Column(name = "FIRST_NAME")
+    private String firstName;
+
+    @Column(name = "LAST_NAME")
+    private String lastName;
+
+}" > src/main/java/com/example/springbootmonolith/models/User.java
+* mkdir src/main/java/com/example/springbootmonolith/controllers
+* touch src/main/java/com/example/springbootmonolith/controllers/UsersController.java
+* echo "package com.example.springbootmonolith.controllers;
+
+
+@RestController
+public class UsersController {
+
+}" >> src/main/java/com/example/springbootmonolith/controllers/UsersController.java
+* 
+
+
+
 
 
 up to https://git.generalassemb.ly/SECA/seca-nyc/blob/master/week2/lessons/day1/spring-boot-intro-and-monolith.md#spring-data-jpa--repositories
